@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ДЗ № 8</title>
+  </head>
+  <body>
+    <script>
+      var str = "1, 2, 3, 4, 5";
+
+      function strToArr(someVar) {
+        res = [];
+        for (i = 0; i <= someVar.length; i++) {
+          if (someVar[i] === ",") {
+            res.push(someVar[i - 1]);
+          }
+        }
+        res.push(someVar[someVar.length - 1]);
+        return res.map(Number);
+      }
+
+      console.log(strToArr(str)); // Преобразовываем строку из чисел к массиву
+
+      // Вторая часть домашки. Массив с сообщениями
+
+      var notification = [
+        {
+          date: "31/07/2019",
+          msg: "Some message here 2"
+        },
+        {
+          date: "25/07/2019",
+          msg: "Some message here 3"
+        },
+        {
+          date: "24/07/2019",
+          msg: "Some message here 5"
+        },
+        {
+          date: "25/07/2019",
+          msg: "Some message here 4"
+        },
+        {
+          date: "31/07/2019",
+          msg: "Some message here 1"
+        }
+      ];
+
+      function sortNotif(obj) {
+        function sortUnsorted(arrUns) {
+          arrUns.sort(function(a, b) {
+            a = a.date
+              .split("/")
+              .reverse()
+              .join("");
+            b = b.date
+              .split("/")
+              .reverse()
+              .join("");
+            return a > b ? 1 : a < b ? -1 : 0;
+          });
+        }
+        sortUnsorted(obj);
+
+        return obj.reduce(function(acc, item) {
+          if (!acc.length || acc[acc.length - 1].title !== item.date) {
+            var arr = [];
+            arr.push(item.msg);
+            var obj = {
+              title: item.date,
+              items: arr
+            };
+            acc.push(obj);
+          } else {
+            acc[acc.length - 1].items.push(item.msg);
+          }
+          return acc;
+        }, []);
+      }
+
+      var grouped = sortNotif(notification);
+      console.log(grouped);
+    </script>
+  </body>
+</html>
